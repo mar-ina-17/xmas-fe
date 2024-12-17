@@ -12,9 +12,9 @@ const useStore = create<Store>()((set) => ({
   email: "",
   name: "",
   gift_to: "",
-  setGift: (to: string) => set((state) => ({ gift_to: to })),
+  setGift: (to: string) => set(() => ({ gift_to: to })),
   setNameAndEmail: (email: string, name: string) =>
-    set((state) => ({
+    set(() => ({
       name: name,
       email: email,
     })),
