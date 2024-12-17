@@ -1,11 +1,7 @@
-import { useState } from "react";
-import { Box, Tabs } from "@chakra-ui/react";
-import GenderSelector from "./custom_components/Roulette";
+import { Box } from "@chakra-ui/react";
 import TabsMenu from "./custom_components/TabsMenu";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <Box
       display="flex"
