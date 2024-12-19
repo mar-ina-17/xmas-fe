@@ -14,6 +14,7 @@ import useRandomGender from "../hooks/useRandomResult";
 import santaImage from "../assets/santa.png";
 import Snowfall from "react-snowfall";
 import useRemovePerson from "../hooks/useRemovePerson";
+import useEmailSend from "../hooks/useEmailSend";
 
 const GenderSelector: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -23,6 +24,7 @@ const GenderSelector: React.FC = () => {
   const { name } = useStore();
   const { gift_to } = useRandomGender();
   const { removePerson } = useRemovePerson();
+  const { sendEmail } = useEmailSend({ name: name, gift_to: gift_to });
 
   const handleButtonClick = () => {
     if (!gift_to) return;
@@ -36,6 +38,7 @@ const GenderSelector: React.FC = () => {
       setLoading(false);
       jsConfetti.addConfetti();
       removePerson();
+      sendEmail();
     }, 2000);
   };
 
