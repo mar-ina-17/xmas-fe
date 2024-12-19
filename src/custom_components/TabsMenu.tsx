@@ -9,7 +9,7 @@ const TabsMenu: React.FC = () => {
   const [activeTab, setActiveValue] = useState<string | null>("roulette");
   return (
     <Box
-      width={{ base: "90%", sm: "50%", md: "40%" }} /* Responsive width */
+      width={{ base: "90%", sm: "70%", md: "40%" }} /* Responsive width */
       height="500px" /* Fixed height for content */
       display="flex"
       flexDirection="column"
@@ -52,31 +52,12 @@ const TabsMenu: React.FC = () => {
         </Box>
 
         {/* Fixed Content Container */}
-        <Box
-          flex="1" /* Fills remaining space */
-          p={2}
-          bg="white"
-          overflowY="auto" /* Scrollable if needed */
-        >
+        <Box overflowY="auto" bg="white">
           <Tabs.Content value="roulette">
-            <Box
-              height="100%"
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <RouletteContainer />
-            </Box>
+            <RouletteContainer />
           </Tabs.Content>
           <Tabs.Content value="shopping_list">
-            <Box
-              height="100%"
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <ShoppingTab />
-            </Box>
+            <ShoppingTab />
           </Tabs.Content>
         </Box>
       </Tabs.Root>

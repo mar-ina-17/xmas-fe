@@ -7,7 +7,6 @@ const RouletteContainer: React.FC = () => {
   const [isEmailSubmitted, setIsEmailSubmitted] = useState(false);
 
   const handleEmailSubmit = () => {
-    // When email is successfully submitted, show the GenderSelector
     setIsEmailSubmitted(true);
   };
 
