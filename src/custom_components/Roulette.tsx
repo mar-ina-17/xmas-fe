@@ -21,10 +21,10 @@ const GenderSelector: React.FC = () => {
   const [color, setColor] = useState("black");
   const [result, setResult] = useState<string | null>(null);
   const jsConfetti = new JSConfetti();
-  const { name } = useStore();
+  const { name, email} = useStore();
   const { gift_to } = useRandomGender();
   const { removePerson } = useRemovePerson();
-  const { sendEmail } = useEmailSend({ name: name, gift_to: gift_to });
+  const { sendEmail } = useEmailSend({ name: name, gift_to: gift_to , email: email});
 
   const handleButtonClick = () => {
     if (!gift_to) return;

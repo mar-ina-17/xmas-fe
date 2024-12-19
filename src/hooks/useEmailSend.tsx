@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
 import emailjs from "@emailjs/browser";
 
-const useEmailSend = ({ name, gift_to }: { name: string; gift_to: string }) => {
+const useEmailSend = ({
+  name,
+  gift_to,
+  email,
+}: {
+  name: string;
+  gift_to: string;
+  email: string;
+}) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -15,6 +23,7 @@ const useEmailSend = ({ name, gift_to }: { name: string; gift_to: string }) => {
         import.meta.env.VITE_TEMPATE_ID,
         {
           to_name: name,
+          to_email: email,
           GIFT_RESULT: gift_to,
         }
       );
