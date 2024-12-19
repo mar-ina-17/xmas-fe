@@ -1,7 +1,19 @@
 import React, { useState } from "react";
-import { Box, Button, Spinner, Text, Card, CardBody } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Spinner,
+  Text,
+  Card,
+  CardBody,
+  Image,
+} from "@chakra-ui/react";
 import JSConfetti from "js-confetti";
 import useStore from "../store";
+import useRandomGender from "../hooks/useRandomResult";
+import santaImage from "./santa.png";
+import Snowfall from "react-snowfall";
+import useRemovePerson from "../hooks/useRemovePerson";
 
 const GenderSelector: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -9,19 +21,21 @@ const GenderSelector: React.FC = () => {
   const [result, setResult] = useState<string | null>(null);
   const jsConfetti = new JSConfetti();
   const { name } = useStore();
-
-  const options = ["Male", "Female"];
+  const { gift_to } = useRandomGender();
+  const { removePerson } = useRemovePerson();
 
   const handleButtonClick = () => {
+    if (!gift_to) return; // Ensure `gift_to` is valid before proceeding
+
     setLoading(true);
     setResult(null);
 
     setTimeout(() => {
-      const randomResult = options[Math.floor(Math.random() * options.length)];
-      setResult(randomResult);
-      setColor(randomResult[0] === "M" ? "#00BFFF" : "pink");
+      setResult(gift_to);
+      setColor(gift_to[0] === "m" ? "#00BFFF" : "#FF69B4"); // Check for "male" or "female"
       setLoading(false);
       jsConfetti.addConfetti();
+      removePerson();
     }, 2000);
   };
 
@@ -29,18 +43,20 @@ const GenderSelector: React.FC = () => {
     <Card.Root
       border="none"
       maxW="sm"
-      height="400px" /* Set card height */
+      height="400px"
       mx="auto"
       boxShadow="none"
       borderRadius="lg"
+      bg="gray.50"
     >
       <CardBody
         display="flex"
         justifyContent="center"
         alignItems="center"
         textAlign="center"
-        height="100%" /* Ensures full height of the card */
+        height="100%"
       >
+        <Snowfall />
         <Box>
           {loading ? (
             <section>
@@ -54,25 +70,33 @@ const GenderSelector: React.FC = () => {
               <Button
                 variant="solid"
                 color="white"
-                bg="red.500"
+                bg="green.400"
                 size="lg"
                 fontWeight="700"
                 onClick={handleButtonClick}
-                disabled={loading}
+                disabled={loading || !gift_to} // Disable if loading or no gift_to
               >
                 Are you curious?
               </Button>
             )
           )}
           {result && (
-            <Box mt="-50%">
-              <Text fontSize="2xl" fontWeight="bold" color={color}>
-                {result}
+            <Box width="100%">
+              <Text
+                fontSize="4xl"
+                fontWeight="bold"
+                color={color}
+                bg="gray.200"
+                p={2}
+                borderRadius={6}
+              >
+                {result.toUpperCase()}
               </Text>
             </Box>
           )}
         </Box>
       </CardBody>
+      <Image src={santaImage} alt="Santa Claus" width="100%" height="200px" />
     </Card.Root>
   );
 };

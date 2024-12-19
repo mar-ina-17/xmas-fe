@@ -8,10 +8,13 @@ import {
   CardFooter,
   Text,
   Stack,
+  NativeSelectField,
+  NativeSelectRoot,
 } from "@chakra-ui/react";
 import { Field } from "../components/ui/field"; // Replace with your actual path
 import { useForm } from "react-hook-form";
 import useStore from "../store";
+import useFetchPeople from "../hooks/useFetchPeople";
 
 interface EmailAuthProps {
   onSubmit: () => void;
@@ -24,7 +27,7 @@ interface FormValues {
 
 const EmailAuth: React.FC<EmailAuthProps> = ({ onSubmit }) => {
   const { setNameAndEmail } = useStore();
-
+  const { people } = useFetchPeople();
   const {
     register,
     handleSubmit,
@@ -32,20 +35,20 @@ const EmailAuth: React.FC<EmailAuthProps> = ({ onSubmit }) => {
   } = useForm<FormValues>();
 
   const onFormSubmit = (data: FormValues) => {
-    setNameAndEmail(data.email, data.name); // Update store with email and name
-    onSubmit(); // Trigger parent handler
+    setNameAndEmail(data.email, data.name);
+    onSubmit();
   };
 
   return (
     <Card.Root maxW="sm" border="none">
       <CardHeader textAlign="center">
         <Text fontSize="md" fontWeight="bold">
-          Konichiwa again, bitches! To access this part, you need to input your
-          valid email, you will recieve your result there as well.
+          Namaste, bitches! To access this part, you need to input your valid
+          email, you will recieve your result there as well.
         </Text>
         <Text fontSize="xs" color="green.500">
-          You can only do this once, after that you will not be admitted to this
-          part!
+          You can only do this once, after that your name will removed from the
+          list below!
         </Text>
       </CardHeader>
 
@@ -58,12 +61,20 @@ const EmailAuth: React.FC<EmailAuthProps> = ({ onSubmit }) => {
               invalid={!!errors.name}
               errorText={errors.name?.message}
             >
-              <Input
-                placeholder="Go60"
-                {...register("name", {
-                  required: "Name is required",
-                })}
-              />
+              <NativeSelectRoot>
+                <NativeSelectField
+                  {...register("name", { required: "Name is required" })}
+                >
+                  <option value="">Select your name</option>
+                  {people
+                    .filter((person) => !person.email)
+                    .map((person, idx) => (
+                      <option key={idx} value={person.name}>
+                        {person.name}
+                      </option>
+                    ))}
+                </NativeSelectField>
+              </NativeSelectRoot>
             </Field>
             <Field
               label="Email Address"
@@ -86,7 +97,7 @@ const EmailAuth: React.FC<EmailAuthProps> = ({ onSubmit }) => {
         </CardBody>
 
         <CardFooter display="flex" justifyContent="center" gap={4}>
-          <Button bg="green.400" type="submit">
+          <Button bg="red.400" fontWeight="700" type="submit">
             Submit
           </Button>
         </CardFooter>

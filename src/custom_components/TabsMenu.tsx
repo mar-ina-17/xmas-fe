@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Tabs } from "@chakra-ui/react";
 import RouletteContainer from "../pages/RouletteContainer";
+import { FaGifts } from "react-icons/fa";
+import { FaCartShopping } from "react-icons/fa6";
+import ShoppingTab from "./ShoppingTab";
 
 const TabsMenu: React.FC = () => {
+  const [activeTab, setActiveValue] = useState<string | null>("roulette");
   return (
     <Box
       width={{ base: "90%", sm: "50%", md: "40%" }} /* Responsive width */
@@ -15,11 +19,35 @@ const TabsMenu: React.FC = () => {
       overflow="hidden"
     >
       {/* Static Tabs List */}
-      <Tabs.Root variant="enclosed" fitted defaultValue="roulette">
+      <Tabs.Root
+        variant="enclosed"
+        fitted
+        defaultValue="roulette"
+        value={activeTab}
+        onValueChange={(e) => setActiveValue(e.value)}
+      >
         <Box position="static">
           <Tabs.List display="flex" justifyContent="space-around">
-            <Tabs.Trigger value="roulette">Roulette</Tabs.Trigger>
-            <Tabs.Trigger value="shopping_list">Shopping List</Tabs.Trigger>
+            <Tabs.Trigger
+              value="roulette"
+              m={2}
+              color={activeTab === "roulette" ? "white" : "green.400"}
+              bg={activeTab === "roulette" ? "green.400" : "gray.200"}
+              fontWeight="900"
+            >
+              <FaGifts />
+              Roulette
+            </Tabs.Trigger>
+            <Tabs.Trigger
+              value="shopping_list"
+              m={2}
+              color={activeTab === "shopping_list" ? "white" : "green.400"}
+              bg={activeTab === "shopping_list" ? "green.400" : "gray.200"}
+              fontWeight="900"
+            >
+              <FaCartShopping />
+              Shopping
+            </Tabs.Trigger>
           </Tabs.List>
         </Box>
 
@@ -47,7 +75,7 @@ const TabsMenu: React.FC = () => {
               justifyContent="center"
               alignItems="center"
             >
-              Manage your projects
+              <ShoppingTab />
             </Box>
           </Tabs.Content>
         </Box>
