@@ -60,12 +60,11 @@ const GenderSelector: React.FC = () => {
         console.error("Error removing person:", error);
       }
 
-      // Uncomment this when testing email sending
-      // try {
-      //   sendEmail();
-      // } catch (error) {
-      //   console.error("Error sending email:", error);
-      // }
+      try {
+        sendEmail();
+      } catch (error) {
+        console.error("Error sending email:", error);
+      }
     }, 2000);
   };
 
