@@ -47,7 +47,8 @@ const EmailAuth: React.FC<EmailAuthProps> = ({ onSubmit }) => {
           will recieve your result there as well.
         </Text>
         <Text fontSize="xs" color="red.500">
-          You can only do this once! After that 
+          You can only do this once! After that your name will dissappear from
+          the list below.
         </Text>
       </CardHeader>
 
