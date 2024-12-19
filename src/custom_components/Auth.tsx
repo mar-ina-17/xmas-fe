@@ -46,9 +46,8 @@ const EmailAuth: React.FC<EmailAuthProps> = ({ onSubmit }) => {
           Hello! To access this part, you need to input your valid email, you
           will recieve your result there as well.
         </Text>
-        <Text fontSize="xs" color="green.500">
-          You can only do this once, after that your name will removed from the
-          list below!
+        <Text fontSize="xs" color="red.500">
+          You can only do this once! After that 
         </Text>
       </CardHeader>
 

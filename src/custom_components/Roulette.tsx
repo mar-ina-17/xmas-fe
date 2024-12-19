@@ -21,24 +21,51 @@ const GenderSelector: React.FC = () => {
   const [color, setColor] = useState("black");
   const [result, setResult] = useState<string | null>(null);
   const jsConfetti = new JSConfetti();
-  const { name, email} = useStore();
+  const { name, email } = useStore();
   const { gift_to } = useRandomGender();
   const { removePerson } = useRemovePerson();
-  const { sendEmail } = useEmailSend({ name: name, gift_to: gift_to , email: email});
+  const { sendEmail } = useEmailSend({
+    name: name,
+    gift_to: gift_to,
+    email: email,
+  });
 
   const handleButtonClick = () => {
-    if (!gift_to) return;
+    console.log(gift_to);
+    if (!gift_to) {
+      console.error("Error: gift_to is not defined or null.");
+      return;
+    }
+
+    console.log("Button clicked. Gift to:", gift_to);
 
     setLoading(true);
     setResult(null);
 
     setTimeout(() => {
+      console.log("Setting result and color...");
       setResult(gift_to);
       setColor(gift_to[0] === "m" ? "#00BFFF" : "#FF69B4");
       setLoading(false);
-      jsConfetti.addConfetti();
-      removePerson();
-      sendEmail();
+
+      try {
+        jsConfetti.addConfetti();
+      } catch (error) {
+        console.error("Error adding confetti:", error);
+      }
+
+      try {
+        removePerson();
+      } catch (error) {
+        console.error("Error removing person:", error);
+      }
+
+      // Uncomment this when testing email sending
+      // try {
+      //   sendEmail();
+      // } catch (error) {
+      //   console.error("Error sending email:", error);
+      // }
     }, 2000);
   };
 
@@ -63,7 +90,7 @@ const GenderSelector: React.FC = () => {
         <Box>
           {loading ? (
             <section>
-              <Text fontSize="xl" mb={4}>
+              <Text fontSize="lg" mb={4}>
                 {name}, you get to buy a present for a...
               </Text>
               <Spinner size="xl" color="red.500" />
@@ -77,7 +104,7 @@ const GenderSelector: React.FC = () => {
                 size="lg"
                 fontWeight="700"
                 onClick={handleButtonClick}
-                disabled={loading || !gift_to}
+                zIndex="10" // Ensure button is clickable
               >
                 Are you curious?
               </Button>

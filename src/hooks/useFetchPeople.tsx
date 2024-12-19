@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import useStore from "../store";
+import { db } from "../../firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 interface Person {
   name: string;
-  email: string;
+  id: string;
 }
 
 const useFetchPeople = () => {
@@ -13,35 +15,38 @@ const useFetchPeople = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log("Fetching data from Firestore...");
       try {
         setLoading(true);
-        const response = await fetch("https://xmas-be.vercel.app/people");
 
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status} ${response.statusText}`);
-        }
+        // Fetch the collection from Firestore
+        const querySnapshot = await getDocs(collection(db, "people"));
 
-        const result: Person[] = await response.json();
-        setPeople(
-          result.sort((a, b) => {
-            if (a.name < b.name) {
-              return -1;
-            }
-            if (a.name > b.name) {
-              return 1;
-            }
-            return 0;
-          })
+        // Map the data to the expected structure
+        const result: Person[] = querySnapshot.docs.map((doc) => ({
+          name: doc.data().name, // Adjust based on your schema
+          id: doc.id, // Adjust based on your schema
+        }));
+
+        // Sort the result alphabetically by name
+        const sortedPeople = result.sort((a, b) =>
+          a.name.localeCompare(b.name)
         );
+
+        // Update the state
+        setPeople(sortedPeople);
       } catch (err) {
-        setError((err as Error).message);
+        const errorMessage =
+          err instanceof Error ? err.message : "An unknown error occurred.";
+        console.error("Error fetching people:", errorMessage);
+        setError(errorMessage);
       } finally {
         setLoading(false);
       }
     };
 
     fetchData();
-  }, []);
+  }, [setPeople]);
 
   return { people, loading, error };
 };
