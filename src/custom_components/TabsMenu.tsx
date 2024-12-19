@@ -9,8 +9,8 @@ const TabsMenu: React.FC = () => {
   const [activeTab, setActiveValue] = useState<string | null>("roulette");
   return (
     <Box
-      width={{ base: "90%", sm: "70%", md: "40%" }} /* Responsive width */
-      height="500px" /* Fixed height for content */
+      width={{ base: "90%", sm: "70%", md: "40%" }}
+      height="500px"
       display="flex"
       flexDirection="column"
       borderWidth="1px"
@@ -18,7 +18,6 @@ const TabsMenu: React.FC = () => {
       boxShadow="md"
       overflow="hidden"
     >
-      {/* Static Tabs List */}
       <Tabs.Root
         variant="enclosed"
         fitted
@@ -51,12 +50,11 @@ const TabsMenu: React.FC = () => {
           </Tabs.List>
         </Box>
 
-        {/* Fixed Content Container */}
         <Box overflowY="auto" bg="white">
           <Tabs.Content value="roulette">
             <RouletteContainer />
           </Tabs.Content>
-          <Tabs.Content value="shopping_list">
+          <Tabs.Content value="shopping_list" height="100vh">
             <ShoppingTab />
           </Tabs.Content>
         </Box>

@@ -1,7 +1,11 @@
 import { Box } from "@chakra-ui/react";
 import TabsMenu from "./custom_components/TabsMenu";
+import { useEffect } from "react";
+import emailjs from "@emailjs/browser";
 
 function App() {
+  useEffect(() => emailjs.init("dewJDFaT2I1geKn_c"), []);
+
   return (
     <Box
       display="flex"

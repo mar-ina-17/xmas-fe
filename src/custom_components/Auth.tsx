@@ -11,7 +11,7 @@ import {
   NativeSelectField,
   NativeSelectRoot,
 } from "@chakra-ui/react";
-import { Field } from "../components/ui/field"; // Replace with your actual path
+import { Field } from "../components/ui/field";
 import { useForm } from "react-hook-form";
 import useStore from "../store";
 import useFetchPeople from "../hooks/useFetchPeople";
@@ -43,8 +43,8 @@ const EmailAuth: React.FC<EmailAuthProps> = ({ onSubmit }) => {
     <Card.Root maxW="sm" border="none">
       <CardHeader textAlign="center">
         <Text fontSize="md" fontWeight="bold">
-          Namaste, bitches! To access this part, you need to input your valid
-          email, you will recieve your result there as well.
+          Hello! To access this part, you need to input your valid email, you
+          will recieve your result there as well.
         </Text>
         <Text fontSize="xs" color="green.500">
           You can only do this once, after that your name will removed from the

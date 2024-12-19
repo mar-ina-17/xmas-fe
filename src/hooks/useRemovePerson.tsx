@@ -7,7 +7,6 @@ const useRemovePerson = () => {
 
   const removePerson = async () => {
     try {
-      // Send a DELETE request to remove the person
       const response = await fetch(
         `https://xmas-be.vercel.app/people/${name}`,
         {
@@ -22,7 +21,6 @@ const useRemovePerson = () => {
         throw new Error(`Failed to delete the person: ${response.statusText}`);
       }
 
-      // Update the local state after successful deletion
       const updatedPeople = people.filter((person) => person.name !== name);
       setPeople(updatedPeople);
     } catch (err) {

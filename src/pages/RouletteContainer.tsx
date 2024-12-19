@@ -19,10 +19,8 @@ const RouletteContainer: React.FC = () => {
     >
       <Box justifyContent="center" alignItems="center" height="100vh">
         {!isEmailSubmitted ? (
-          // Show EmailDialog first
           <EmailDialog onSubmit={handleEmailSubmit} />
         ) : (
-          // Show GenderSelector after email is submitted
           <GenderSelector />
         )}
       </Box>

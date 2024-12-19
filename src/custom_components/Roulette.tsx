@@ -11,7 +11,7 @@ import {
 import JSConfetti from "js-confetti";
 import useStore from "../store";
 import useRandomGender from "../hooks/useRandomResult";
-import santaImage from "./santa.png";
+import santaImage from "../assets/santa.png";
 import Snowfall from "react-snowfall";
 import useRemovePerson from "../hooks/useRemovePerson";
 
@@ -25,14 +25,14 @@ const GenderSelector: React.FC = () => {
   const { removePerson } = useRemovePerson();
 
   const handleButtonClick = () => {
-    if (!gift_to) return; // Ensure `gift_to` is valid before proceeding
+    if (!gift_to) return;
 
     setLoading(true);
     setResult(null);
 
     setTimeout(() => {
       setResult(gift_to);
-      setColor(gift_to[0] === "m" ? "#00BFFF" : "#FF69B4"); // Check for "male" or "female"
+      setColor(gift_to[0] === "m" ? "#00BFFF" : "#FF69B4");
       setLoading(false);
       jsConfetti.addConfetti();
       removePerson();
@@ -74,7 +74,7 @@ const GenderSelector: React.FC = () => {
                 size="lg"
                 fontWeight="700"
                 onClick={handleButtonClick}
-                disabled={loading || !gift_to} // Disable if loading or no gift_to
+                disabled={loading || !gift_to}
               >
                 Are you curious?
               </Button>
